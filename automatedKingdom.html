@@ -10,12 +10,12 @@
 	<h1>Economy <span id = "economy" class = "grey"></span>   Loyalty <span id = "loyalty" class = "grey"></span>   Stability <span id = "stability" class = "grey"></span> Consumption <span id = "consumption" class = "grey"></h1><br>
 	<div><table>
 		<tr>
-		<td><button onclick = "setTaxationEdict('none')">No Taxation</button> </td> <td><button onclick = "setHolidayEdict('none')">No Holidays</button> </td></tr>
+		<td><button onclick = "setTaxationEdict('none')">No Taxation</button> </td> <td><button onclick = "setHolidayEdict('none')">No Holidays</button> </td> <td><button onclick = "setPromotionEdict('none')"> None </button></td></tr>
 		<tr>
-		<td><button onclick = "setTaxationEdict('light')">Light Taxation</button> </td><td> <button onclick = "setHolidayEdict('one')">one Holiday</button> </td> </tr><tr>
-		<td><button onclick = "setTaxationEdict('normal')">Normal Taxation</button> </td> <td><button onclick = "setHolidayEdict('six')">SixHolidays</button> </td> </tr><tr>
-		<td><button onclick = "setTaxationEdict('heavy')">HeavyTaxation</button> </td><td><button onclick = "setHolidayEdict('twelve')">twelve Holidays</button> </td> </tr><tr>
-		<td><button onclick = "setTaxationEdict('overwhelming')">Overwhelming Taxation</button> </td><td> <button onclick = "setHolidayEdict('twentyFour')">TwentyFour Holidays</button> </td></tr>
+		<td><button onclick = "setTaxationEdict('light')">Light Taxation</button> </td><td> <button onclick = "setHolidayEdict('one')">one Holiday</button> </td> <td> <button onclick = "setPromotionEdict('token')"> token</button></td> </tr><tr>
+		<td><button onclick = "setTaxationEdict('normal')">Normal Taxation</button> </td> <td><button onclick = "setHolidayEdict('six')">SixHolidays</button> </td><td><button onclick = "setPromotionEdict('standard')">standard</button></td> </tr> <tr>
+		<td><button onclick = "setTaxationEdict('heavy')">HeavyTaxation</button> </td><td><button onclick = "setHolidayEdict('twelve')">twelve Holidays</button> </td> <td><button onclick = "setPromotionEdict('aggressive')"> aggressive</button> </td> </tr><tr>
+		<td><button onclick = "setTaxationEdict('overwhelming')">Overwhelming Taxation</button> </td><td> <button onclick = "setHolidayEdict('twentyFour')">TwentyFour Holidays</button> </td> <td> <button onclick = "setPromotionEdict('expansionist')">expansionist  </td></tr>
 		</table>
 	</div>
 </body>
@@ -32,7 +32,7 @@ function calculateLoyalty(){
 }
 var stability =0;
 function calculateStability(){
-	stability = promotionEdict.stability;
+	stability = currentPromotionEdict.stability;
 }
 var kingdomDC = 20;
 var treasury = 0;
@@ -135,9 +135,10 @@ promotionEdict.expansionist = {stability :4, consumption : 8};
 
 var currentPromotionEdict= {stability : -1, consumption :0};
 function setPromotionEdict(promotionLevel){
-currentPromotionEdict = promotionEdict[promotionLevel];
+	currentPromotionEdict = promotionEdict[promotionLevel];
 calculateStability();
 calculateConsumption();
+console.log(currentPromotionEdict);
 updateAll();
 }
 
@@ -150,21 +151,20 @@ Heavy		+3			–4
 Overwhelming+4			–8
 */
 var taxationEdict = {none:"",light:"",normal:"",heavy:"",overwhelming:""};
-function taxDefine (){
 taxationEdict.none ={level:"none",economy:0, loyalty:1};
 taxationEdict.light ={level: "light",economy:1, loyalty:-1};
 taxationEdict.normal ={level: "normal",economy:2, loyalty:-2};
 taxationEdict.heavy ={level: "heavy", economy:3, loyalty:-4};
 taxationEdict.overwhelming ={level: "overwhealming", economy:4, loyalty:-8};
-}
+
 var currentTaxationEdict = {level: "none" , economy:0, loyalty:1};
-taxDefine();
 
 //setting the edict of taxation for kingdom
 function setTaxationEdict(taxLevel){
 currentTaxationEdict = taxationEdict[taxLevel];
 calculateEconomy();
 calculateLoyalty();
+calculateStability();
 updateAll();
 console.log(currentTaxationEdict);
 }
@@ -175,10 +175,9 @@ function roll(dx) {
 		return result;
 	}
 	function calculateConsumption(){
-	consumption = (cityDistricts + kingdomSize + holidayEdict.consumption + promotionEdict.consumption) - (numberOfFarms *2);
-	if (consumption < 0){ consumption = 0;
-	}
-	return consumption;
+	consumption = ( currentHolidayEdict.consumption + currentPromotionEdict.consumption);
+	//if (consumption < 0){ consumption = 0;}
+	//return consumption;
 }
 
 
