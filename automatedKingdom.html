@@ -1,0 +1,196 @@
+<head>
+	<style>
+	.grey{
+		background-color: lightgrey;
+	}
+	</style>
+
+</head>
+<body>
+	<h1>Economy <span id = "economy" class = "grey"></span>   Loyalty <span id = "loyalty" class = "grey"></span>   Stability <span id = "stability" class = "grey"></span> Consumption <span id = "consumption" class = "grey"></h1><br>
+	<div><table>
+		<tr>
+		<td><button onclick = "setTaxationEdict('none')">No Taxation</button> </td> <td><button onclick = "setHolidayEdict('none')">No Holidays</button> </td></tr>
+		<tr>
+		<td><button onclick = "setTaxationEdict('light')">Light Taxation</button> </td><td> <button onclick = "setHolidayEdict('one')">one Holiday</button> </td> </tr><tr>
+		<td><button onclick = "setTaxationEdict('normal')">Normal Taxation</button> </td> <td><button onclick = "setHolidayEdict('six')">SixHolidays</button> </td> </tr><tr>
+		<td><button onclick = "setTaxationEdict('heavy')">HeavyTaxation</button> </td><td><button onclick = "setHolidayEdict('twelve')">twelve Holidays</button> </td> </tr><tr>
+		<td><button onclick = "setTaxationEdict('overwhelming')">Overwhelming Taxation</button> </td><td> <button onclick = "setHolidayEdict('twentyFour')">TwentyFour Holidays</button> </td></tr>
+		</table>
+	</div>
+</body>
+<script>
+var economy = 0;
+//final economy calculations
+function calculateEconomy(){
+	economy = currentTaxationEdict.economy;
+}
+var loyalty = 0;
+//final loyalty calculations
+function calculateLoyalty(){
+	loyalty = currentTaxationEdict.loyalty+currentHolidayEdict.loyalty;
+}
+var stability =0;
+function calculateStability(){
+	stability = promotionEdict.stability;
+}
+var kingdomDC = 20;
+var treasury = 0;
+var consumption = 0;
+var kingdomSize = 0;
+var cityDistricts = 0;
+var numberOfFarms = 0;
+
+/*Table: Holiday Edicts
+Per Year	Loyalty	Consumption
+None			–1		+0
+1				+1		+1
+6				+2		+2
+12				+3		+4
+24				+4		+8 */
+var holidayEdict = {one:"",six:"",twelve:"",twentyFour:""};
+holidayEdict.none ={loyalty: -1, consumption:0};
+holidayEdict.one ={loyalty:1, consumption:1};
+holidayEdict.six={loyalty:2, consumption:2};
+holidayEdict.twelve={loyalty:3, consumption:4};
+holidayEdict.twentyFour={loyalty:4, consumption:8};
+
+var currentHolidayEdict = {loyalty: -1, consumption:0};
+function setHolidayEdict(holidayLevel){
+	currentHolidayEdict =holidayEdict[holidayLevel];
+	calculateLoyalty();
+	calculateConsumption();
+	updateAll();
+	console.log(currentHolidayEdict);
+}
+/*
+
+Table: Improvement Edicts
+Kingdom Size	New Settlements1	New Buildings2	Terrain Improvements	Hex Claims
+01–10					1				1					2					1
+11–25					1				2					3					2
+26–50					1				5					5					3
+51–100					2				10					7					4
+101–200					3				20					9					8
+201+					4			No limit(im setting it at 30)12				12
+*/
+var newSettlements = 1;
+var newBuildings = 1;
+var newTerrainImprovements = 2;
+var hexClaims = 1;
+function calculateKingdomSize(){
+	if (kingdomSize < 11){
+		newSettlements = 1;
+		newBuildings = 1;
+		newTerrainImprovements =2;
+		hexClaims = 1;
+	}
+	else if (kingdomSize < 26){
+		newSettlements = 1;
+		newBuildings = 2;
+		newTerrainImprovements =3;
+		hexClaims = 2;
+	}
+	else if (kingdomSize < 51){
+		newSettlements = 1;
+		newBuildings = 5;
+		newTerrainImprovements =5;
+		hexClaims = 3;
+	}
+	else if (kingdomSize < 101){
+		newSettlements = 2;
+		newBuildings = 10;
+		newTerrainImprovements =7;
+		hexClaims = 4;
+	}
+	else if (kingdomSize < 201){
+		newSettlements = 3;
+		newBuildings = 20;
+		newTerrainImprovements =9;
+		hexClaims = 8;
+	}
+	else {
+		newSettlements = 4;
+		newBuildings = 30;
+		newTerrainImprovements =12;
+		hexClaims = 12;
+	}
+}
+
+/*
+Table: Promotion Edicts
+Promotion Level	Stability	Consumption
+None				–1			+0
+Token				+1			+1
+Standard			+2			+2
+Aggressive			+3			+4
+Expansionist		+4			+8
+*/
+var promotionEdict = {none:"",token:"",standard:"",aggressive:"",expansionist:""};
+promotionEdict.none = {stability : -1, consumption :0};
+promotionEdict.token = {stability : 1, consumption : 1};
+promotionEdict.standard = {stability :2, consumption : 2};
+promotionEdict.aggressive = {stability : 3, consumption : 4};
+promotionEdict.expansionist = {stability :4, consumption : 8};
+
+var currentPromotionEdict= {stability : -1, consumption :0};
+function setPromotionEdict(promotionLevel){
+currentPromotionEdict = promotionEdict[promotionLevel];
+calculateStability();
+calculateConsumption();
+updateAll();
+}
+
+/*Table: Taxation Edicts
+Tax Level	Economy	Loyalty
+None		+0			+1
+Light		+1			–1
+Normal		+2			–2
+Heavy		+3			–4
+Overwhelming+4			–8
+*/
+var taxationEdict = {none:"",light:"",normal:"",heavy:"",overwhelming:""};
+function taxDefine (){
+taxationEdict.none ={level:"none",economy:0, loyalty:1};
+taxationEdict.light ={level: "light",economy:1, loyalty:-1};
+taxationEdict.normal ={level: "normal",economy:2, loyalty:-2};
+taxationEdict.heavy ={level: "heavy", economy:3, loyalty:-4};
+taxationEdict.overwhelming ={level: "overwhealming", economy:4, loyalty:-8};
+}
+var currentTaxationEdict = {level: "none" , economy:0, loyalty:1};
+taxDefine();
+
+//setting the edict of taxation for kingdom
+function setTaxationEdict(taxLevel){
+currentTaxationEdict = taxationEdict[taxLevel];
+calculateEconomy();
+calculateLoyalty();
+updateAll();
+console.log(currentTaxationEdict);
+}
+
+function roll(dx) {
+		var result = Math.floor((Math.random()*dx)+1);
+		//console.log(result);
+		return result;
+	}
+	function calculateConsumption(){
+	consumption = (cityDistricts + kingdomSize + holidayEdict.consumption + promotionEdict.consumption) - (numberOfFarms *2);
+	if (consumption < 0){ consumption = 0;
+	}
+	return consumption;
+}
+
+
+
+//gets all data posted
+function updateAll(){
+	document.getElementById("economy").innerHTML = economy;
+	document.getElementById("loyalty").innerHTML = loyalty;
+	document.getElementById("stability").innerHTML = stability;
+	document.getElementById("consumption").innerHTML = consumption;
+	
+}
+updateAll();
+
+</script>
