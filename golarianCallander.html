@@ -1,14 +1,31 @@
 <head>
 	<style type="text/css">
-		
+		table, td, th{
+			border: 1px solid black;
+			padding: 15px;
+		}
 	</style>
 </head>
 <body>
 	<h1 id = "currentMonth"> </h1>
+	<h1 id ="currentYear"> </h1>
 	<table>
-		<tr><td>Sunday</td><td>Moonday</td><td>Toilday</td><td>Wealday</td><td>Oathday</td><td>Fireday</td><td>Starday</td>
-		</tr>
+		<tr><th>Sunday</th><th>Moonday</th><th>Toilday</th><th>Wealday</th><th>Oathday</th><th>Fireday</th><th>Starday</th>
+		</tr><tr>
+		<td id ="1">d</td> <td id ="2">d</td> <td id = "3">d</td> <td id ="4">d</td> <td id ="5">d</td> <td id ="6">d</td> <td id = "7"> d</td>
+	</tr><tr>
+		<td id ="8"> d</td> <td id ="9"></td> <td id ="10"></td> <td id = "11"></td> <td id ="12"></td> <td id ="13"></td><td id = "14"></td>
+	</tr><tr>
+		<td id ="15"></td> <td id ="16"></td> <td id ="17"></td> <td id ="18"></td> <td id ="19"></td> <td id ="20"></td><td id = "21"></td>
+	</tr><tr>
+		<td id ="22"></td> <td id = "23"></td> <td id ="24"></td> <td id ="25"></td> <td id = "26"></td> <td id ="27"></td><td id = "28"></td>
+	</tr><tr>
+		<td id ="29"></td> <td id = "30"></td> <td id ="31"></td> <td id ="32"></td> <td id = "33"></td> <td id ="34"></td><td id = "35"></td>
+	</tr><tr>
+		<td id ="36"></td> <td id = "37"></td> <td id ="38">
+	</tr>
 	</table>
+	<button onclick="prevMonth();">Previous Month</button><button onclick="nextMonth();"> next month</button>
 </body>
 <script type="text/javascript">
 	/*Day	General Purpose
@@ -21,6 +38,21 @@ Starday	Work
 Sunday	Rest, religion
 */
 
+// data to print in quotes
+function putWordsOnPage(theElementId, datatoprint ){
+	document.getElementById(theElementId).innerHTML = datatoprint;
+}
+function clearMonth(){
+	for (i=1; i < 38; i++){
+		putWordsOnPage(i,"")
+	}
+}
+function printMonth(){
+	clearMonth();
+	for (i =1; i < monthLength[monthNumber]+1; i++){
+		putWordsOnPage(i,i);
+	}
+}
 
 /*Golarion Month	Gregorian Month	Days in Month	Season
 Abadius (ah-BAY-dee-us)	(January)	31 days	Winter
@@ -36,6 +68,51 @@ Lamashan (lah-MAHSH-ahn)	(October)	31 days	Fall
 Neth (NEHTH)	(November)	30 days	Fall
 Kuthona (koo-THOH-nah)	(December)	31 days	Winter
 */
+var monthLength = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31};
+var monthNumber = 1;
+var currentMonth = "Abadius";
+var months = {1:"Abadius", 2:"Calistril",3:"Pharast", 4:"Gozran",5:"Desnus", 6:"Sarenith",7: "Erastus",8: "Arodus",9: "Rova",10: "Lamashan",11: "Neth",12: "Kuthona"};
+function nextMonth(){
+	if (monthNumber > 11){
+		monthNumber = 0;
+		nextYear();
+	}
+	currentMonth = months[monthNumber+1];
+	monthNumber ++ ;
+	document.getElementById("currentMonth").innerHTML = currentMonth;
+	console.log(monthNumber);
+	console.log(monthLength[monthNumber])
+	printMonth();
+}
+
+function prevMonth(){
+	if (monthNumber <2){
+		monthNumber = 13;
+		prevYear();
+		
+	} 	
+	currentMonth = months[monthNumber-1];
+	monthNumber --;
+	document.getElementById("currentMonth").innerHTML = currentMonth;
+	console.log(monthNumber);
+	printMonth();
+}
+
+document.getElementById("currentMonth").innerHTML = currentMonth;
 
 //starting year 4710
+var currentYear = 4710;
+function nextYear(){
+	currentYear ++;
+document.getElementById("currentYear").innerHTML = currentYear;
+}
+
+function prevYear(){
+	currentYear = currentYear -1;
+	document.getElementById("currentYear").innerHTML = currentYear;
+
+}
+
+document.getElementById("currentYear").innerHTML = currentYear;
+printMonth();
 </script>
