@@ -21,7 +21,7 @@
 	</div>
 		<br>
 		<button onclick = "economyRoll()">Economy </button><br>
-		<button onclick = "kingdomCheck(loyalty, 'Loyalty')">Loyalty</button><br>
+		<button onclick = "loyaltyRoll()">Loyalty</button><br>
 		<button onclick = "stabilityRoll()">Stability</button>
 		<h1 id = "result"> </h1>
 
@@ -253,12 +253,21 @@ function stabilityRoll(){
 			calculateKingdomDC();
 		updateAll();
 
-	}else{
+			}else{
 		addToUnrest = roll(4);
 		unrest += addToUnrest;
 		document.getElementById("result").innerHTML = "The people are frightened as the streets become unsafe and many of your good works begin to unravel. Your roll of " + theCheck[1] + " has earned you " + addToUnrest + " points of Unrest to your Kingdom";
 		calculateKingdomDC();
 		updateAll();
-	}
-}
+			}
+		}
+
+		function loyaltyRoll(){
+			theCheck = kingdomCheck(loyalty, "Loyalty")
+			if (theCheck[0] == true){
+				document.getElementById("result").innerHTML = "The Loyalty Check has suceeded with a " + theCheck[1];
+			}else {
+				document.getElementById("result").innerHTML = "The loyalty check has failed with a " + theCheck[1];
+			}
+		}
 </script>
