@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<head>
+</head>
+<body>
+	<button onclick = 'previousGame()'> Previous Game</button>
+	<button onclick = 'randomGame()'>Random Game </button>
+	<button onclick = 'nextGame()'> Next Game </button>
+	<h1 id= gameName> </h1>
+	<h2 id = players> <h2>
+	<h2 id = playtime> <h2>
+	<p id = description> </p>
+	
+
+</body>
+
+<script>
+	//design a website to pick through all the board games i have randomly.
+function game(gameName, minPlayers, maxPlayers, playTime, image, description){
+	this.gameName = gameName,
+	this.minPlayers = minPlayers,
+	this.maxPlayers = maxPlayers,
+	this.playTime = playTime,
+	this.image = image;
+	this.description = description;
+	 this.giveName = function()
+	 {document.getElementById("gameName").innerHTML = this.gameName + '<br>';}
+
+	this.players = function()
+	{document.getElementById("players").innerHTML = 'For ' + this.minPlayers +' to '+ this.maxPlayers+ ' Players' ;}
+
+	this.averageTime = function()
+	{document.getElementById("playtime").innerHTML = 'Average Playtime:'+this.playTime+ ' Hours';}
+	this.giveImage = function()
+	{let x = document.createElement("IMG");
+	x.setAttribute('src',this.image);
+	const element = document.getElementById('gameName');
+	element.appendChild(x);
+	}
+	this.postDescription = function()
+	{
+		document.getElementById("description").innerHTML = this.description;
+	}
+}
+//listof games with name, min and max plaersaverage playing time then a link to an immage
+const game1 = new game('Cranium',2,9,3,'cranium.jpg','Cranium bills itself as the "whole-brain" game. Its a party game that borrows from a host of other popular party games of recent times. Players have to successfully complete activities in each of four sections to win.');
+const game2 = new game('Castle Ravenloft', 1, 5, 1, 'castleRavenloft.jpg','Castle Ravenloft Boardgame by Bill Slavicsek, Mike Mearls and Peter Lee. The master of Ravenloft is having guests for dinner – and you are invited! Evil lurks in the towers and dungeons of Castle Ravenloft, and only heroes of exceptional bravery can survive the horrors within. Designed for 1-5 players, this boardgame features multiple scenarios, challenging quests, and cooperative gameplay.');
+const game3 = new game('Xia', 3 ,5, 1.5, 'Xia.jpg','Xia: Legends of a Drift System is a 3-5 player sandbox style competitive space adventure. Each player starts as a lowly but hopeful captain of a small starship.<br>Players fly their ships about the system, completing a variety of missions, exploring new sectors and battling other ships. Navigating hazardous environments, players choose to mine, salvage, or trade valuable cargo. Captains vie with each other for Titles, riches, and most importantly Fame.<br>The most adaptive, risk taking, and creative players will excel. One captain will rise above the others, surpassing mortality by becoming Legend!');
+const game4 = new game('Lords of Waterdeep', 2, 5, 1.5, 'lordsofwaterdeep.jpg','Waterdeep, the City of Splendors – the most resplendent jewel in the Forgotten Realms, and a den of political intrigue and shady back-alley dealings. In this game, the players are powerful lords vying for control of this great city. Its treasures and resources are ripe for the taking, and that which cannot be gained through trickery and negotiation must be taken by force!<br>In Lords of Waterdeep, a strategy board game for 2-5 players, you take on the role of one of the masked Lords of Waterdeep, secret rulers of the city. Through your agents, you recruit adventurers to go on quests on your behalf, earning rewards and increasing your influence over the city. Expand the city by purchasing new buildings that open up new actions on the board, and hinder – or help – the other lords by playing Intrigue cards to enact your carefully laid plans.<br>During the course of play, you may gain points or resources through completing quests, constructing buildings, playing intrigue cards or having other players utilize the buildings you have constructed. At the end of 8 rounds of play, the player who has accrued the most points wins the game.');
+const game5 = new game('Scoundrels of Skullport', 2,6,2, 'scoundrelsofskullport.jpg','Scoundrels of Skullport adds new content for Lords of Waterdeep. It’s not one, but two, complete expansions: the sprawling dungeon of Undermountain and the criminal haven of Skullport.<br>Each thrilling location has unique characteristics and offers new play options, including new Lords, Buildings, Intrigue, and Quest cards.<br>Owners of Lords of Waterdeep can use one or both of these new subterranean locations to add depth to their game experience. There’s also a new faction, the Gray Hands, so now a sixth player can join in the fun!');
+const game6 = new game('Clue',2,6,.75,'clue.jpg','The classic detective game! In Clue, players move from room to room in a mansion to solve the mystery of: who done it, with what, and where? Players are dealt character, weapon, and location cards after the top card from each card type is secretly placed in the confidential file in the middle of the board. Players must move to a room and then make an accusation against a character saying they did it in that room with a specific weapon. The player to the left must show one of any cards accused to the accuser if in that players hand. Through deductive reasoning each player must figure out which character, weapon, and location are in the secret file. To do this, each player must uncover what cards are in other players hands by making more and more accusations. Once a player knows what cards the other players are holding, they will know what cards are in the secret file. A great game for those who enjoy reasoning and thinking things out.');
+const game7 = new game('Machine of Death', 2, 4, .5, 'machineofdeath.jpg','Machine of Death: The Game of Creative Assassination is a storytelling game set in a world in which a machine can predict how a person will die with 100% accuracy with only a small blood sample. However, the machine delights in being vague and twisted. A card reading "Old Age" could mean you die in your sleep at age 120, or it could mean youre run over tomorrow by an elderly driver who forgot to take his pills today. Players of the game take the role of assassins, who must use the various tools at their disposal -- from storytelling to a slew of items available from specialty Black Market shops -- to create a situation in which a target is killed in a way in line with their Death Prediction. The Machine of Death Game uses this basic idea, of assassins working in a world where cause of death is known to create various game modes.');
+const game8 = new game('Scrabble', 2,4, 1.5, 'scrabble.jpg','In this classic word game, players use their seven drawn letter-tiles to form words on the gameboard. Each word laid out earns points based on the commonality of the letters used, with certain board spaces giving bonuses. But a word can only be played if it uses at least one already-played tile or adds to an already-played word. This leads to slightly tactical play, as potential words are rejected because they would give an opponent too much access to the better bonus spaces.');
+const game9 = new game('Marvel Codenames', 2 , 8, .4,'codenamesmarvel.jpg','Codenames: Marvel combines the hit social word game Codenames, while featuring characters and locations from the Marvel Universe including, Spider Man, Guardians of the Galaxy, The Avengers and Doctor Strange. Opposing teams, S.H.I.E.L.D. and Hydra, compete to be the first to identify all of their team’s ‘field agents’ from 25 Code cards displayed in a 5x5 grid. Code cards contain pictures on one side and words on the other.<br>In Codenames, two teams compete to see who can guess all of their words correctly first — but those words are hiding in plain sight in a 5x5 grid that includes the words of the other team, neutral words, and an assassin that will cause you to lose the game immediately if you guess it. One person on each team is a spymaster and only these two know which words belong to each team. Spymasters take turns giving one-word clues that can point to multiple words on the board. Their teammates try to guess words of the right color while avoiding those that belong to the opposing team — and everyone wants to avoid the assassin.');
+const game10 = new game('Channel A',3,6,.5,'channela.png','In Channel A, players compete at presenting anime TV show ideas.<br>Shows are based on two premises selected by one player from a set of five randomly chosen premises. Each player selects up to four title word cards from their hand of ten cards and makes a pitch to the other players about their show with that title. Players then vote by secret ballot on who had the best show pitch.<br>Premise and Title cards are all drawn from the vast ocean of anime shows.');
+const game11 = new game('Pathfinder Card Game',1,6,1.5,'pathfindercardgame.jpg','A forgotten evil stirs in the ancient land of Varisia. Dark magic once more thrums amid crumbling ruins, giants gather in titanic armies, cultists murder in the name of foul deities, and maniacal goblins plot a fiery end for the peaceful town of Sandpoint.<br>Launch a campaign to strike back against the evils plaguing Varisia with the Pathfinder Adventure Card Game: Rise of the Runelords - Base Set. This complete cooperative strategy card game pits 1 to 4 heroes against the traps, monsters, deadly magic, and despicable foes of the Pathfinder Roleplaying Games award-winning Rise of the Runelords AdventurePath. In this game players take the part of a fantasy character such as a rogue or wizard, each with varying skills and proficiencies that are represented by the cards in their deck. The classic ability scores (Strength, Dexterity, etc.) are assigned with different sized dice. Players can acquire allies, spells, weapons, and other items. The goal is to find and defeat a villain before a certain number of turns pass, with the villain being represented by its own deck of cards complete with challenges and foes that must be overcome. Characters grow stronger after each game, adding unique gear and awesome magic to their decks, and gaining incredible powers, all of which theyll need to challenge greater threats in a complete Pathfinder Adventure Card Game Adventure Path.<br>The Pathfinder Adventure Card Game is an expandable game, with the first set containing nearly 500 cards. The Rise of the Runelords - Base Set supports 1 to 4 players; a 110-card Character Add-On Deck expands the possible number of players to 5 or 6 and adds more character options for any number of players. The game will be expanded with bimonthly 110-card adventure decks.')
+
+//array of games
+const gameArray = [game1,game2,game3,game4,game5,game6,game7,game8,game9,game10,game11];
+//the location of the current game shown 
+let displayedGame = -1;
+
+
+function roll(dx) {
+		var result = Math.floor(Math.random()*dx);
+		//console.log(result);
+		return result;
+					}
+
+/*
+function showRoll(dx){
+	document.getElementById("gameName").innerHTML = roll(dx);
+} */
+
+// when pressed puts up a random game stas on age 
+function randomGame(){
+currentRoll = roll(gameArray.length);
+if (currentRoll != displayedGame ){
+currentGame = gameArray[currentRoll];
+displayedGame =currentRoll;
+generatePage();
+
+} else{
+	randomGame();
+}
+}
+
+//cycle through games going up through the array
+function nextGame(){
+displayedGame = displayedGame +1;
+if(displayedGame == gameArray.length ){
+	displayedGame = 0;
+}
+	currentGame = gameArray[displayedGame];
+	generatePage();
+}
+
+function previousGame(){
+;
+	if(displayedGame <= 0){
+		displayedGame = gameArray.length -1;
+		currentGame = gameArray[displayedGame];
+		generatePage();
+	}
+		else{
+		displayedGame = displayedGame -1;
+		currentGame = gameArray[displayedGame];
+		generatePage();
+		//console.log(displayedGame);
+	}
+}
+
+
+//put data on page
+function generatePage(){
+currentGame.giveName();
+currentGame.players();
+currentGame.averageTime();
+currentGame.giveImage();
+currentGame.postDescription();
+//console.log(currentGame);
+}
+
+
+</script>
+</html>
